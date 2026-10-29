@@ -100,6 +100,46 @@ export function Home({ surahs, ayahOfDay }: { surahs: SurahMeta[]; ayahOfDay: Ay
             onClick={() => setMarks((items) => toggle(items, bookmarkKey(ayahOfDay.surah.id, ayahOfDay.verse.n)))}>
             {marks.includes(bookmarkKey(ayahOfDay.surah.id, ayahOfDay.verse.n)) ? "Saved" : "Bookmark"}
           </button>
+          
+<button
+  className="btn"
+  onClick={async () => {
+    const url = `${window.location.origin}/surah/${ayahOfDay.surah.id}#ayah-${ayahOfDay.verse.n}`;
+
+    const text = [
+      ayahOfDay.verse.ar,
+      ayahOfDay.verse.en,
+      `${ayahOfDay.surah.translit} (${ayahOfDay.surah.id}:${ayahOfDay.verse.n})`,
+      "The Quran Study",
+      url,
+    ].filter(Boolean).join("\n\n");
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "Ayah of the Day — The Quran Study",
+          text,
+          url,
+        });
+      } else {
+        await navigator.clipboard.writeText(text);
+        alert("Ayah and link copied!");
+      }
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") return;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        alert("Ayah and link copied!");
+      } catch {
+        alert("Unable to share. Please try again.");
+      }
+    }
+  }}
+>
+  Share Ayah
+</button>
+
         </div>
         <div className="mt-6 space-y-1 border-t border-line pt-4 text-xs leading-5 text-muted">
           <p>Arabic text: <a className="underline underline-offset-2" href={ayahOfDay.arabicSource.url} target="_blank" rel="noreferrer">Tanzil, Uthmani script</a> ({ayahOfDay.arabicSource.license.split(" — ")[0]}; verbatim).</p>
