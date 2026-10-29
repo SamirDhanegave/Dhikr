@@ -186,16 +186,18 @@ export function Reader({ surah, verses, surahCounts }: { surah: SurahMeta; verse
     }
   }, [autoNext, cur, next, playAt, rep, timingFor, verses.length]);
 
-  const finishSurah = useCallback(() => {
-    done.current++;
-    if (rep === 0 || done.current < rep) {
-      playAt(0);
-    } else if (autoNext && surah.id < 114) {
-      router.push(`/surah/${surah.id + 1}?autoplay=1`);
-    } else {
-      setPlaying(false);
-      setActiveWord(null);
-    }
+const finishSurah = useCallback(() => {
+  done.current++;
+
+  if (rep === 0 || done.current < rep) {
+    playAt(0);
+  } else if (autoNext && surah.id < 114) {
+    router.push(`/surah/${surah.id + 1}?autoplay=1`);
+  } else {
+    setPlaying(false);
+    setActiveWord(null);
+  }
+}, [autoNext, playAt, rep, router, surah.id]);
   }, [autoNext, playAt, rep, router, surah.id]);
 
   const onTimeUpdate = (event: React.SyntheticEvent<HTMLAudioElement>) => {
