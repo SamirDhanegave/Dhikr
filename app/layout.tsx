@@ -1,4 +1,4 @@
-
+import "./globals.css";
 
 import type { Metadata } from "next";
 import { Amiri_Quran } from "next/font/google";
