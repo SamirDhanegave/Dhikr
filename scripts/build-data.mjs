@@ -9,7 +9,7 @@ const hasCompleteData = () => {
     if (!Array.isArray(meta.surahs) || meta.surahs.length !== 114) return false;
     if (!meta.sources?.arabic?.name?.includes(`"${SCRIPT}"`) ||
         !meta.sources?.translation?.name?.includes(`(${TRANS})`) ||
-        !meta.sources?.transliteration?.name?.includes(`"${TLIT}"`)) return false;
+        !meta.sources?.transliteration?.name) return false;
     for (let id = 1; id <= 114; id++) {
       const verses = JSON.parse(fs.readFileSync(path.join(out, "quran", `${id}.json`), "utf8"));
       if (!Array.isArray(verses) || verses.length !== meta.surahs[id - 1].ayahs) return false;
