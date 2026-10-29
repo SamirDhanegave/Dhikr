@@ -1,9 +1,9 @@
 
-# Dhikr
+# StudyQuran
 
 **Read. Learn. Reflect.**
 
-Dhikr is a peaceful space to explore the Holy Quran, understand its meaning, and build a consistent reading habit.
+StudyQuran is a peaceful space to explore the Holy Quran, understand its meaning, and build a consistent reading habit.
 
 Read verses with English translations, listen to Quran recitations, bookmark meaningful passages, and track your reading progress — all in one simple, distraction-free experience.
 
@@ -71,4 +71,4 @@ Quran translations, transliteration, and audio may be provided by external sourc
 
 ---
 
-**Dhikr — Read. Learn. Reflect.**
+**StudyQuran — Read. Learn. Reflect.**
