@@ -36,6 +36,7 @@ export function Reader({ surah, verses, surahCounts }: { surah: SurahMeta; verse
   const hasReadIntent = useRef(false);
   const preserveExplicitPosition = useRef(false);
   const au = useRef<HTMLAudioElement | null>(null);
+  const autoplayHandled = useRef(0);
 
   const trackAyah = useCallback((ayah: number) => {
     if (!Number.isInteger(ayah) || ayah < 1 || ayah > surah.ayahs || lastTrackedAyah.current === ayah) return;
@@ -141,7 +142,7 @@ export function Reader({ surah, verses, surahCounts }: { surah: SurahMeta; verse
     player.play().catch(() => setErr("Playback blocked or failed."));
   }, [audioReady]);
 
-  const loadVerseTrack = useCallback((ayah: number, playbackMode: "surah" | "verse", resetRepeat = true) => {
+  const loadVerseTrack = useCallback((ayah: number, playbackMode: "surah" | "verse", resetRepeat = true, continuous = false) => {
     const timing = timingFor(ayah);
     if (!timing) {
       setErr("Word timings are unavailable for this verse.");
@@ -158,7 +159,15 @@ export function Reader({ surah, verses, surahCounts }: { surah: SurahMeta; verse
     hasReadIntent.current = true;
     preserveExplicitPosition.current = true;
     trackAyah(ayah);
-    playAt(timing.timestampFrom);
+
+    const player = au.current;
+    const nowMs = player ? player.currentTime * 1000 : 0;
+    if (continuous && player && !player.paused && nowMs >= timing.timestampFrom - 50 && nowMs < timing.timestampTo) {
+      // Audio is already inside this verse (timeupdate fires late), so keep playing.
+      // Seeking back here is what made the first word repeat.
+    } else {
+      playAt(timing.timestampFrom);
+    }
     document.getElementById(`ayah-${ayah}`)?.scrollIntoView({ block: "center" });
   }, [playAt, timingFor, trackAyah]);
 
@@ -168,14 +177,16 @@ export function Reader({ surah, verses, surahCounts }: { surah: SurahMeta; verse
 
   // Autoplay when arriving via ?autoplay=1 (only once audio for THIS surah is ready)
   useEffect(() => {
-    if (!audio || !audioReady || new URLSearchParams(window.location.search).get("autoplay") !== "1") return;
+    if (!audio || !audioReady || autoplayHandled.current === surah.id) return;
+    if (new URLSearchParams(window.location.search).get("autoplay") !== "1") return;
+    autoplayHandled.current = surah.id; // effect re-runs while router.replace is pending; don't seek twice
     loadSurah();
     router.replace(`/surah/${surah.id}`, { scroll: false });
   }, [audio, audioReady, loadSurah, router, surah.id]);
 
   const next = useCallback(() => {
-    if (cur < verses.length) load(cur + 1);
-  }, [cur, load, verses.length]);
+    if (cur < verses.length) loadVerseTrack(cur + 1, "verse", true, true);
+  }, [cur, loadVerseTrack, verses.length]);
 
   const finishVerse = useCallback(() => {
     const player = au.current;
