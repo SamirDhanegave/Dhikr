@@ -1,0 +1,6 @@
+# Quran Study
+1. `npm i` 2. `npm run data` (downloads + validates 114 surahs / 6,236 ayahs, including non-empty English translations; fails loudly on mismatch) 3. `npm run dev`.
+The reader displays the configured English translation (`QURAN_TRANSLATION`, default `en-saheeh`). The build step regenerates data if verse files are missing Arabic, English, or transliteration text, even when `meta.json` already exists. Review the translation source and license in `data/meta.json` before redistribution.
+The reader streams Alafasy's chapter recording together with its QDC verse and word timestamps. Full Surah playback highlights the current ayah and individual Arabic word; playing a selected ayah, repeat, seeking, and auto-next use the same synchronized recording. The audio remains externally hosted. Confirm the providers' permission and reuse terms before launch; see `data/meta.json`.
+Reading progress is stored locally in the browser: the homepage resumes the last reached ayah and counts unique ayahs toward the 6,236-ayah total. A Surah is counted complete only after its final ayah is reached. Use “Reset Progress” on the homepage to clear reading progress without removing bookmarks.
+Env: `QURAN_DATA_BASE`, `QURAN_TRANSLATION`, `QURAN_TRANSLIT`, `NEXT_PUBLIC_SITE_URL`. Deploy on Vercel (prebuild runs the data step). No private keys are needed yet.

@@ -1,0 +1,3 @@
+import { getMeta } from "@/lib/data"; export const metadata = { title: "Sources & licenses" };
+export default function Sources() { const { sources: s, generatedAt } = getMeta(); return (<div><h1 className="mb-4 text-2xl font-semibold">Sources &amp; licenses</h1><p className="mb-4 text-sm text-muted">Data generated {generatedAt}. Quranic text is displayed verbatim from these sources and is never AI-generated.</p>
+  <dl className="space-y-4">{Object.entries(s).map(([k, v]) => <div key={k}><dt className="font-medium capitalize">{k}</dt><dd>{v.name}<br /><span className="text-muted">License: {v.license}{v.note ? ` · ${v.note}` : ""}</span><br /><a className="text-brand underline" href={v.url}>{v.url}</a></dd></div>)}</dl></div>); }

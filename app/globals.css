@@ -1,0 +1,8 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+:root{--bg:#FAF9F6;--surface:#F1EFE8;--ink:#202520;--button-text:#000;--brand:#176B50;--muted:#5d655e;--line:#dcd8cb}
+.dark{--bg:#161a17;--surface:#202520;--ink:#ece9df;--button-text:#fff;--brand:#5fc4a0;--muted:#a3aaa4;--line:#343b35}
+body{background:var(--bg);color:var(--ink)}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.ar{direction:rtl;font-family:var(--font-arabic),serif;line-height:2.2}
+.btn{border:1px solid var(--line);border-radius:.5rem;padding:.35rem .75rem;background:var(--surface);color:var(--button-text)}
+.btn:hover{border-color:var(--brand)}

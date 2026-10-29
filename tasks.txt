@@ -1,0 +1,16 @@
+Tasks :
+
+
+1. Add English translation => DONE!!!
+2. Highlight each Arabic word as it is recited, while keeping the current ayah highlighted => DONE!!!
+3. fix the playing speed of the surah => DONE 
+4. Add auto next play => DONE!!!
+5. Add button for going back => DONE!!!
+6. Add more Content
+7. fix the minutes  => DONE!!!
+
+Commands to run in terminal for going live:
+
+cd "C:\web for Quran\quran-platform\quran-platform"
+dir package.json 
+npm run dev
