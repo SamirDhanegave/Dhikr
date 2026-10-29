@@ -258,11 +258,46 @@ export function Reader({ surah, verses, surahCounts }: { surah: SurahMeta; verse
       <div className="mb-4">
         <Link className="btn inline-flex" href="/">← Back to Home</Link>
       </div>
-      <div className="mb-6 text-center">
-        <h1 className="text-2xl font-semibold">{surah.id}. {surah.translit}</h1>
-        <p className="ar text-4xl" lang="ar">{surah.name}</p>
-        <p className="text-muted">{surah.meaning} · {surah.type} · {surah.ayahs} verses</p>
-      </div>
+  
+<div className="mb-6 text-center">
+  <h1 className="text-2xl font-semibold">{surah.id}. {surah.translit}</h1>
+  <p className="ar text-4xl" lang="ar">{surah.name}</p>
+  <p className="text-muted">{surah.meaning} · {surah.type} · {surah.ayahs} verses</p>
+  <div className="mt-4">
+    <button
+      className="btn"
+      onClick={async () => {
+        const url = `${window.location.origin}/surah/${surah.id}`;
+        const text = `Read Surah ${surah.translit} (${surah.meaning}) on The Quran Study:\n\n${url}`;
+
+        try {
+          if (navigator.share) {
+            await navigator.share({
+              title: `Surah ${surah.translit} — The Quran Study`,
+              text,
+              url,
+            });
+          } else {
+            await navigator.clipboard.writeText(text);
+            alert("Surah link copied!");
+          }
+        } catch (error) {
+          if (error instanceof Error && error.name === "AbortError") return;
+
+          try {
+            await navigator.clipboard.writeText(text);
+            alert("Surah link copied!");
+          } catch {
+            alert("Unable to share. Please try again.");
+          }
+        }
+      }}
+    >
+      Share Surah
+    </button>
+  </div>
+</div>
+
       <div className="mb-4 flex flex-wrap items-center gap-3 text-sm" role="group" aria-label="Reading settings">
         <span>Arabic <button className="btn" aria-label="Decrease Arabic size" onClick={() => set({ ar: clamp(s.ar - 2, 20, 64) })}>A−</button> <button className="btn" aria-label="Increase Arabic size" onClick={() => set({ ar: clamp(s.ar + 2, 20, 64) })}>A+</button></span>
         <span>English <button className="btn" aria-label="Decrease English size" onClick={() => set({ en: clamp(s.en - 1, 12, 30) })}>A−</button> <button className="btn" aria-label="Increase English size" onClick={() => set({ en: clamp(s.en + 1, 12, 30) })}>A+</button></span>
