@@ -220,10 +220,37 @@ const finishSurah = useCallback(() => {
     }
     setActiveWord(getWordPositionAt(activeTiming, time));
 
-if (mode === "verse") {
-  const selectedTiming = timingFor(cur);
-  if (selectedTiming && time >= selectedTiming.timestampTo) finishVerse();
-}
+
+    if (mode === "verse") {
+      const selectedTiming = timingFor(cur);
+      if (selectedTiming && time >= selectedTiming.timestampTo) {
+        finishVerse();
+      }
+    }
+  };
+
+  const skip = (seconds: number) => {
+    const player = au.current;
+    if (!player) return;
+
+    if (mode === "surah") {
+      player.currentTime = clamp(
+        player.currentTime + seconds,
+        0,
+        player.duration || 0
+      );
+    } else {
+      const timing = timingFor(cur);
+      if (timing) {
+        player.currentTime = clamp(
+          player.currentTime + seconds,
+          timing.timestampFrom / 1000,
+          timing.timestampTo / 1000
+        );
+      }
+    }
+  };
+
   const skip = (seconds: number) => {
     const player = au.current;
     if (!player) return;
