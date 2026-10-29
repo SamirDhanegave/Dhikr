@@ -146,7 +146,11 @@ export function Reader({ surah, verses, surahCounts }: { surah: SurahMeta; verse
     preserveExplicitPosition.current = true;
     trackAyah(ayah);
     
-document.getElementById(`ayah-${ayah}`)?.scrollIntoView({ block: "center" });
+
+
+playAt(timing.timestampFrom);
+
+    document.getElementById(`ayah-${ayah}`)?.scrollIntoView({ block: "center" });
 
 console.log("Ayah playback timing:", {
   ayah,
@@ -154,8 +158,6 @@ console.log("Ayah playback timing:", {
   start: timing.timestampFrom,
   end: timing.timestampTo,
 });
-
-playAt(timing.timestampFrom);
 
   }, [playAt, timingFor, trackAyah]);
 
