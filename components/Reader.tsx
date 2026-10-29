@@ -218,18 +218,10 @@ export function Reader({ surah, verses, surahCounts }: { surah: SurahMeta; verse
     }
     setActiveWord(getWordPositionAt(activeTiming, time));
 
-    if (mode === "verse") {
+if (mode === "verse") {
   const selectedTiming = timingFor(cur);
-
-  if (
-    selectedTiming &&
-    time >= selectedTiming.timestampTo &&
-    time < (player.duration * 1000) - 100
-  ) {
-    finishVerse();
-  }
+  if (selectedTiming && time >= selectedTiming.timestampTo) finishVerse();
 }
-
   const skip = (seconds: number) => {
     const player = au.current;
     if (!player) return;
