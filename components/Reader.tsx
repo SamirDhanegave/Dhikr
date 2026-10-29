@@ -145,8 +145,18 @@ export function Reader({ surah, verses, surahCounts }: { surah: SurahMeta; verse
     hasReadIntent.current = true;
     preserveExplicitPosition.current = true;
     trackAyah(ayah);
-    document.getElementById(`ayah-${ayah}`)?.scrollIntoView({ block: "center" });
-    playAt(timing.timestampFrom);
+    
+document.getElementById(`ayah-${ayah}`)?.scrollIntoView({ block: "center" });
+
+console.log("Ayah playback timing:", {
+  ayah,
+  mode: playbackMode,
+  start: timing.timestampFrom,
+  end: timing.timestampTo,
+});
+
+playAt(timing.timestampFrom);
+
   }, [playAt, timingFor, trackAyah]);
 
   const load = useCallback((ayah: number) => loadVerseTrack(ayah, "verse"), [loadVerseTrack]);
