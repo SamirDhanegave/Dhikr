@@ -198,7 +198,7 @@ const finishSurah = useCallback(() => {
     setActiveWord(null);
   }
 }, [autoNext, playAt, rep, router, surah.id]);
-  }, [autoNext, playAt, rep, router, surah.id]);
+  
 
   const onTimeUpdate = (event: React.SyntheticEvent<HTMLAudioElement>) => {
     const player = event.currentTarget;
