@@ -52,7 +52,7 @@ export default function Root({
           >
             {children}
 
-            <GoogleAnalytics gaId="G-FRCXCL5X9V" />
+            
           </main>
 
           <footer className="mx-auto max-w-3xl px-4 pb-10 text-xs text-[var(--muted)]">
