@@ -1,5 +1,5 @@
 import "./globals.css";
-
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Amiri_Quran } from "next/font/google";
 import { Providers } from "@/components/Providers";
@@ -51,6 +51,8 @@ export default function Root({
             className="mx-auto max-w-3xl px-4 py-8"
           >
             {children}
+
+            <GoogleAnalytics gaId="G-FRCXCL5X9V" />
           </main>
 
           <footer className="mx-auto max-w-3xl px-4 pb-10 text-xs text-[var(--muted)]">
