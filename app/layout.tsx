@@ -87,9 +87,9 @@ export default function Root({
           </footer>
         </Providers>
 
-                    <GoogleAnalytics gaId="G-FRCXCL5X9V" />
+             
       </body>
-
+  <GoogleAnalytics gaId="G-FRCXCL5X9V" />
     </html>
   );
 }
